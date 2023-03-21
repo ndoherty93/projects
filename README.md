@@ -1,7 +1,8 @@
 # projects
 
-Contains one of the projects listed on my resume
+Contains one of the projects listed on my resume:
 
-2018 WAR in College baseball project is under NDA
+Root for the Home Team?
+2015 Senior Seminar project
 
-2012 Hoberman Brain Twist & 2013 Master Cube projects may be lost to time.
+Uses Baseball Reference Data to explore Logistic Regression.
