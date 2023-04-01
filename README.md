@@ -12,5 +12,6 @@ Contains two of the projects listed on my resume
 
 ### The Hoberman Brain Twist
 - 2012 Poster presentation for Southeastern MAA Conference
+- Won the Walt and Susan Patterson Prize for Outstanding Undergraduate Research
 - Uses the Schreier–Sims algorithm to find the order of the permutation group for the 
 Hoberman Brain Twist puzzle.
