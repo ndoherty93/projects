@@ -1,5 +1,5 @@
 # Resume Projects
-Contains two of the projects listed on my resume
+Contains three of the projects listed on my resume
 
 ### Wins Above Average at the College Level
 - 2018 Saberseminar Presenation
