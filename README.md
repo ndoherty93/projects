@@ -21,6 +21,10 @@ Hoberman Brain Twist puzzle.
 - skeleton code was taken from example in Medium article by Gabe Appelbaum
 - layout was based on Microsoft excel file given to my by GSU pitching staff (included)
 
+### Swing Decision App
+- Was given to me in R markdown form "broken" by the GSU pitching staff
+- Created app based on R markdown file
+
 ### OldCoastalScripts_Hitter and OldCoastalScripts_Pitcher Apps
 - These were R scripts that I wrote in 2017 during my time with Coastal Carolina
 - After learning how to create an R Shiny app, I condensed them into 2 apps for "safekeeping"
