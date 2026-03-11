@@ -1,5 +1,5 @@
 # Resume Projects
-Contains three of the projects listed on my resume
+Contains projects I have worked on during my time at Coastal Carolina University and Georiga State University
 
 ### Wins Above Average at the College Level
 - 2018 Saberseminar Presenation
