@@ -15,3 +15,13 @@ Contains three of the projects listed on my resume
 - Won the Walt and Susan Patterson Prize for Outstanding Undergraduate Research
 - Uses the Schreier–Sims algorithm to find the order of the permutation group for the 
 Hoberman Brain Twist puzzle.
+
+### Pitcher App
+- R Shiny App created for Georgia State baseball while learning to create R Shiny apps
+- skeleton code was taken from example in Medium article by Gabe Appelbaum
+- layout was based on Microsoft excel file given to my by GSU pitching staff (included)
+
+### OldCoastalScripts_Hitter and OldCoastalScripts_Pitcher Apps
+- These were R scripts that I wrote in 2017 during my time with Coastal Carolina
+- After learning how to create an R Shiny app, I condensed them into 2 apps for "safekeeping"
+
