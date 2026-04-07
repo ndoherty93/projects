@@ -18,6 +18,7 @@ Contains projects I have worked on during my time at Coastal Carolina University
 Hoberman Brain Twist puzzle.
 
 ### Pitcher App
+[link to folder](projects/PitcherApp)
 - R Shiny App created for Georgia State baseball while learning to create R Shiny apps
 - skeleton code was taken from example in Medium article by Gabe Appelbaum
 - layout was based on Microsoft excel file given to my by GSU pitching staff (included)
