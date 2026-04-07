@@ -1,8 +1,14 @@
 # Resume Projects
 Contains projects I have worked on during my time at Coastal Carolina University and Georiga State University
 
+### Pitcher App
+[Link to folder](PitcherApp)
+- R Shiny App created for Georgia State baseball while learning to create R Shiny apps
+- skeleton code was taken from example in Medium article by Gabe Appelbaum
+- layout was based on Microsoft excel file given to my by GSU pitching staff (included)
+
 ### Wins Above Average at the College Level
-- [link to pdf](projects/2018_WAR in College Baseball.pdf)
+- [link to pdf](2018_WAR in College Baseball.pdf)
 - 2018 Saberseminar Presenation
 - Discussed how we could bring WAR to the college level, starting with using Trackman Share data to calculate Wins Above Average
 - Unfortunately, was asked at the last minute not to share my results by my boss, so the presentation is very limited
@@ -16,12 +22,6 @@ Contains projects I have worked on during my time at Coastal Carolina University
 - Won the Walt and Susan Patterson Prize for Outstanding Undergraduate Research
 - Uses the Schreier–Sims algorithm to find the order of the permutation group for the 
 Hoberman Brain Twist puzzle.
-
-### Pitcher App
-[link to folder](PitcherApp)
-- R Shiny App created for Georgia State baseball while learning to create R Shiny apps
-- skeleton code was taken from example in Medium article by Gabe Appelbaum
-- layout was based on Microsoft excel file given to my by GSU pitching staff (included)
 
 ### Swing Decision App
 - Was given to me in R markdown form "broken" by the GSU pitching staff
