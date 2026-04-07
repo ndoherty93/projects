@@ -12,36 +12,12 @@ pitch_colors = c("Fastball" = '#d7191c', "Sinker" = "#fdae61", "Slider" = "#A020
   "Sweeper" = "magenta", "Curveball" = '#2c7bb6', "ChangeUp" = '#90EE90',
   "Splitter" = '#90EE32', "Cutter" = "pink", "Undefined" = "dodgerblue")
 
-neworleans1 <- read.csv("20260213-GeorgiaState-1.csv", header=TRUE)
-neworleans2 <- read.csv("20260214-GeorgiaState-1.csv", header=TRUE)
-neworleans3 <- read.csv("20260214-GeorgiaState-2.csv", header=TRUE)
-jaxstate <- read.csv("20260217-RudyAbbottField-1.csv", header=TRUE)
-mercer <- read.csv("20260218-MercerUniversity-1.csv", header=TRUE)
-bellarmine <- read.csv("20260220-GeorgiaState-1.csv", header=TRUE)
-tech <- read.csv("20260224-GeorgiaTech-1.csv", header=TRUE)
 belmont <- read.csv("20260227-ESRosePark-1.csv", header=TRUE)
 belmont2 <- read.csv("20260228-ESRosePark-1.csv", header=TRUE)
 belmont3 <- read.csv("20260228-ESRosePark-2.csv", header=TRUE)
 belmont4 <- read.csv("20260301-ESRosePark-1.csv", header=TRUE)
-csu <- read.csv("20260306-GeorgiaState-1.csv", header=TRUE)
-csu2 <- read.csv("20260307-GeorgiaState-2.csv", header=TRUE)
-csu3 <- read.csv("20260307-GeorgiaState-3.csv", header=TRUE)
-mercer2 <- read.csv("20260310-GeorgiaState-1.csv", header=TRUE)
-marshall <- read.csv("20260313-JackCookField-1.csv", header=TRUE)
-marshall2 <- read.csv("20260314-JackCookField-1.csv", header=TRUE)
-marshall3 <- read.csv("20260315-JackCookField-1.csv", header=TRUE)
-arkstate <- read.csv("20260320-GeorgiaState-1.csv", header=TRUE)
-arkstate2 <- read.csv("20260321-GeorgiaState-1.csv", header=TRUE)
-arkstate3 <- read.csv("20260322-GeorgiaState-1.csv", header=TRUE)
-bamastate <- read.csv("20260324-GeorgiaState-1.csv", header=TRUE)
-texstate <- read.csv("20260327-GeorgiaState-1.csv", header=TRUE)
-texstate2 <- read.csv("20260328-GeorgiaState-1.csv", header=TRUE)
-texstate3 <- read.csv("20260329-GeorgiaState-1.csv", header=TRUE)
 
-
-df <- rbind(neworleans1, neworleans2, neworleans3, jaxstate, mercer, bellarmine, tech,
-belmont, belmont2, belmont3, belmont4, csu, csu2, csu3, mercer2, marshall, marshall2,
-marshall3, arkstate, arkstate2, arkstate3, bamastate, texstate, texstate2, texstate3)
+df <- rbind(belmont, belmont2, belmont3, belmont4)
 
 df <- df %>%
   #filter for when trackman didn't catch pitches
