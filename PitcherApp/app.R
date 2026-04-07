@@ -12,29 +12,36 @@ pitch_colors = c("Fastball" = '#d7191c', "Sinker" = "#fdae61", "Slider" = "#A020
   "Sweeper" = "magenta", "Curveball" = '#2c7bb6', "ChangeUp" = '#90EE90',
   "Splitter" = '#90EE32', "Cutter" = "pink", "Undefined" = "dodgerblue")
 
-neworleans1 <- read.csv("20260213-GeorgiaState-1_unverified.csv", header=TRUE)
-neworleans2 <- read.csv("20260214-GeorgiaState-1_unverified.csv", header=TRUE)
-neworleans3 <- read.csv("20260214-GeorgiaState-2_unverified.csv", header=TRUE)
-jaxstate <- read.csv("20260217-RudyAbbottField-1_unverified.csv", header=TRUE)
-mercer <- read.csv("20260218-MercerUniversity-1_unverified.csv", header=TRUE)
-bellarmine <- read.csv("20260220-GeorgiaState-1_unverified.csv", header=TRUE)
-tech <- read.csv("20260224-GeorgiaTech-1_unverified.csv", header=TRUE)
-belmont <- read.csv("20260227-ESRosePark-1_unverified.csv", header=TRUE)
-belmont2 <- read.csv("20260228-ESRosePark-1_unverified.csv", header=TRUE)
-belmont3 <- read.csv("20260228-ESRosePark-2_unverified.csv", header=TRUE)
-belmont4 <- read.csv("20260301-ESRosePark-1_unverified.csv", header=TRUE)
-csu <- read.csv("20260306-GeorgiaState-1_unverified.csv", header=TRUE)
-csu2 <- read.csv("20260307-GeorgiaState-2_unverified.csv", header=TRUE)
-csu3 <- read.csv("20260307-GeorgiaState-3_unverified.csv", header=TRUE)
+neworleans1 <- read.csv("20260213-GeorgiaState-1.csv", header=TRUE)
+neworleans2 <- read.csv("20260214-GeorgiaState-1.csv", header=TRUE)
+neworleans3 <- read.csv("20260214-GeorgiaState-2.csv", header=TRUE)
+jaxstate <- read.csv("20260217-RudyAbbottField-1.csv", header=TRUE)
+mercer <- read.csv("20260218-MercerUniversity-1.csv", header=TRUE)
+bellarmine <- read.csv("20260220-GeorgiaState-1.csv", header=TRUE)
+tech <- read.csv("20260224-GeorgiaTech-1.csv", header=TRUE)
+belmont <- read.csv("20260227-ESRosePark-1.csv", header=TRUE)
+belmont2 <- read.csv("20260228-ESRosePark-1.csv", header=TRUE)
+belmont3 <- read.csv("20260228-ESRosePark-2.csv", header=TRUE)
+belmont4 <- read.csv("20260301-ESRosePark-1.csv", header=TRUE)
+csu <- read.csv("20260306-GeorgiaState-1.csv", header=TRUE)
+csu2 <- read.csv("20260307-GeorgiaState-2.csv", header=TRUE)
+csu3 <- read.csv("20260307-GeorgiaState-3.csv", header=TRUE)
+mercer2 <- read.csv("20260310-GeorgiaState-1.csv", header=TRUE)
+marshall <- read.csv("20260313-JackCookField-1.csv", header=TRUE)
+marshall2 <- read.csv("20260314-JackCookField-1.csv", header=TRUE)
+marshall3 <- read.csv("20260315-JackCookField-1.csv", header=TRUE)
+arkstate <- read.csv("20260320-GeorgiaState-1.csv", header=TRUE)
+arkstate2 <- read.csv("20260321-GeorgiaState-1.csv", header=TRUE)
+arkstate3 <- read.csv("20260322-GeorgiaState-1.csv", header=TRUE)
+bamastate <- read.csv("20260324-GeorgiaState-1.csv", header=TRUE)
+texstate <- read.csv("20260327-GeorgiaState-1.csv", header=TRUE)
+texstate2 <- read.csv("20260328-GeorgiaState-1.csv", header=TRUE)
+texstate3 <- read.csv("20260329-GeorgiaState-1.csv", header=TRUE)
 
 
-# df <- rbind(intrasquad1, intrasquad2, intrasquad3, intrasquad4, intrasquad5, intrasquad6, intrasquad7,
-#             intrasquad8, intrasquad9, intrasquad10, intrasquad11, intrasquad12, intrasquad13, intrasquad14,
-#             intrasquad15, intrasquad16, intrasquad17, intrasquad18, intrasquad19, intrasquad20, intrasquad21,
-#             intrasquad22, intrasquad23, intrasquad24, intrasquad25, intrasquad26, intrasquad27,
-#             intrasquad28, intrasquad29, intrasquad30)
 df <- rbind(neworleans1, neworleans2, neworleans3, jaxstate, mercer, bellarmine, tech,
-belmont, belmont2, belmont3, belmont4, csu, csu2, csu3)
+belmont, belmont2, belmont3, belmont4, csu, csu2, csu3, mercer2, marshall, marshall2,
+marshall3, arkstate, arkstate2, arkstate3, bamastate, texstate, texstate2, texstate3)
 
 df <- df %>%
   #filter for when trackman didn't catch pitches
@@ -67,7 +74,7 @@ df <- df %>%
     
     #create custom GameID
     CustomGameID = paste0(
-      UTCDate,
+      Date,
       ":",
       str_sub(AwayTeam,1,3),
       "@",
@@ -125,6 +132,10 @@ ui <- page_fluid(page_sidebar(
   ),
   #setting tabs at top
     navset_tab(
+      nav_panel(title = "Pitch Movement", fluidRow(
+        column(6,plotOutput("movement")),
+        column(6,plotOutput("spinSpeed")))
+      ),
       nav_panel(
         title = "Pitch Breakdown", tableOutput("metrics"),
         fluidRow(
@@ -135,10 +146,6 @@ ui <- page_fluid(page_sidebar(
       nav_panel(title = "Release Point", fluidRow(
                                           column(6,plotOutput("releaseBack")), 
                                           column(6,plotOutput("releaseSide")))
-                                          ),
-      nav_panel(title = "Pitch Movement", fluidRow(
-                                          column(6,plotOutput("movement")),
-                                          column(6,plotOutput("spinSpeed")))
                                           ),
       nav_panel(title = "Velo Progression", plotOutput("velos"))
     )
