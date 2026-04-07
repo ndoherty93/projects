@@ -2,6 +2,7 @@
 Contains projects I have worked on during my time at Coastal Carolina University and Georiga State University
 
 ### Wins Above Average at the College Level
+- (projects/2018_WAR in College Baseball.pdf)
 - 2018 Saberseminar Presenation
 - Discussed how we could bring WAR to the college level, starting with using Trackman Share data to calculate Wins Above Average
 - Unfortunately, was asked at the last minute not to share my results by my boss, so the presentation is very limited
