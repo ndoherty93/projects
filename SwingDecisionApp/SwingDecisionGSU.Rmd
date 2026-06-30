@@ -1,0 +1,157 @@
+---
+title: Swing Decision
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# include for setup 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(rmarkdown)
+library(tidyverse)
+library(gt)
+library(DT)
+library(data.table)
+
+game <- read_csv("20260213-GeorgiaState-1_unverified.csv") # Copy and paste whichever csv you're looking at here
+hitter <- "Bass, Wesley" # Put the hitter here in the FORM RECOGNIZED BY TRACKMAN.
+titleHitter <- str_replace_all(hitter, "(\\w+), (\\w+)", "\\2 \\1") # creates the title from the Hitter, switching the position of the first and last name.
+titleDate <- game$UTCDate[1]  #pulls the date from the csv
+titleOpponent <- game$AwayTeam[1] # pulls opponent from the csv (if an opponent shared their csv from a road game, change this to game$HomeTeam[1])
+gsuBatter <- subset(game, Batter==hitter) # filters data using selected Hitter
+
+# Lines 26-30 put the Hitter, Logo, Opponent, and Date at the top of the page
+# Lines 33-40 create a 2 column layout that takes up 100% of the screen for side-by-side content to be split 50-50 (the two </div> at the bottom of the code "close" each row and column that were set up)
+```
+
+  <div style="display: flex; justify-content: space-between; align-items: center;"> 
+  <div style="flex: 1; text-align: left; font-weight: bold; font-size: 20px;">`r   titleHitter`</div> 
+  <div style="flex: 1; text-align: center;"><img src="panther.png" style="max-width: 75px; max-height: 75px;"></div>  
+  <div style="flex: 1; text-align: right; font-weight: bold; font-size: 20px;">`r titleOpponent` - `r titleDate`</div> 
+  </div> 
+  
+   <style type="text/css"> 
+    .main-container {max-width: 100%;} 
+    .row {display: flex;} 
+    .column {flex: 50%;} 
+ </style> 
+
+ <div class = "row"> 
+ <div class = "column">
+ 
+```{r table, fig.align = 'left', echo=FALSE}
+# create table by selecting and renaming variables
+tableData <- gsuBatter %>%
+  select(Inning, Pitcher, PitchofPA, Balls, Strikes, RelSpeed, TaggedPitchType, PitchCall,
+          ExitSpeed) %>%
+   rename("Pitch #" = PitchofPA, Inn = Inning, Call = PitchCall, EV = ExitSpeed, 
+          Velo = RelSpeed) %>%
+   unite(Count, c("Balls", "Strikes"), sep = "-") %>%
+   mutate(across(c('EV'), round, 1), across(c('Velo'), round, 1), 
+          Call = replace(Call, Call == "BallCalled", "BC"), 
+          Call = replace(Call, Call == "StrikeCalled", "KC"),
+          Call = replace(Call, Call == "FoulBallNotFieldable", "FB"),
+          Call = replace(Call, Call == "FoulBallFieldable", "FB"),
+          Call = replace(Call, Call == "StrikeSwinging", "KS"),
+          Call = replace(Call, Call == "HitByPitch", "HBP"),
+          Call = replace(Call, Call =="InPlay", "IP"),
+          EV = replace(EV, EV == -1000, " "),
+          TaggedPitchType = replace(TaggedPitchType, TaggedPitchType == "Fastball", "FB"),
+          TaggedPitchType = replace(TaggedPitchType, TaggedPitchType == "Sinker", "FB"),
+          TaggedPitchType = replace(TaggedPitchType, TaggedPitchType == "Curveball", "CB"),
+          TaggedPitchType = replace(TaggedPitchType, TaggedPitchType == "Cutter", "CUT"),
+          TaggedPitchType = replace(TaggedPitchType, TaggedPitchType == "CurveBall", "CB"),
+          TaggedPitchType = replace(TaggedPitchType, TaggedPitchType == "Slider", "SL"),
+          TaggedPitchType = replace(TaggedPitchType, TaggedPitchType == "ChangeUp", "CH"),
+          TaggedPitchType = replace(TaggedPitchType, TaggedPitchType == "Splitter", "SPL")) %>%
+  unite(Call, c("TaggedPitchType", "Call"), sep=" - ") 
+
+# Create a column to indicate row separators using shift
+tableData <- tableData %>%
+  mutate(Row_Separator = ifelse(is.na(lag(Inn)) | Inn != lag(Inn), "yes", "no"))
+
+# datatable() allows table to be displayed as HTML, so the following code is in R and Javascript
+datatable(
+  tableData,
+  rownames = FALSE, # deletes row numbers on left hand side
+  options = list(
+    dom = 't', # shows only table (hides search bar, page length menu, info text...)
+    paging = FALSE, # makes sure table is on one page
+    columnDefs = list(
+      list(
+        className = 'dt-center', 
+        targets = "_all" # these two lines center the columns
+      ),
+      list(
+        visible = FALSE,
+        targets = ncol(tableData) - 1 # these two lines hide the last column of the table (the row separator column)
+      )
+    ),
+    initComplete = JS(
+      'function(settings, json) {
+      var api = this.api();
+      var rows = api.rows({page: "current"}).nodes();
+      var last = null;
+      
+      api.column(0, {page: "current"}).data().each(function(group,i){
+        if (group != last){
+          $(rows).eq(i).before(
+            "<tr class=\\"group\\\"><td colspan=\\"8\\" style=\\"border-top: 2px solid black; text-align: center;\\"></td></tr>"
+          );
+          last = group;
+        }
+      });
+      }' # end of javascript code, purpose was to put horizontal lines in table (as soon as you filter the table, the lines disappear and won't come back unless you re-knit)
+    )
+  ),
+  width = "85%" # this number is changeable
+)
+
+# lines 113-121 change the font for the table. line 123 opens the second column for the following plot
+```
+
+ <style> 
+   /* Adjust font size for all cells and header row */ 
+  .datatables table td,
+  .datatables table th {
+    font-size: 8px !important;
+  }
+</style>
+
+</div>
+
+<div class = "column">
+```{r Charts, echo=FALSE, fig.align='right' ,fig.width=10, fig.height=10}
+# this code creates the plot for the ABs
+
+gsuBatter$TaggedPitchType <- factor(gsuBatter$TaggedPitchType, levels = c("Fastball", "Sinker", "Cutter", "Slider", "Curveball", "ChangeUp", "Splitter")) # The options for the legend.
+
+gsuBatter$PitchCall <- factor(gsuBatter$PitchCall, levels = c("BallCalled", "StrikeCalled", "StrikeSwinging", "FoulBallNotFieldable", "FoulBallFieldable", "InPlay", "HitByPitch")) # The options for the legend.
+
+ggplot(gsuBatter) +
+  aes(PlateLocSide, PlateLocHeight, col=PitchCall, shape =TaggedPitchType, 
+      label=PitchofPA) +
+  geom_point(size=7) +
+  scale_shape_manual(values = c("Fastball" = 16, "Sinker" = 16, "Slider" = 17, 
+                                "Curveball" = 17, "Cutter" = 18, "ChangeUp" = 15, 
+                                "Splitter" = 15)) +
+  scale_color_manual(values= c("BallCalled" = "green", "StrikeCalled"="purple",
+                               "FoulBallNotFieldable"="orange", 
+                               "FoulBallFieldable"="orange", "InPlay"="yellow",
+                               "StrikeSwinging"="red", "HitByPitch" = "pink")) +
+  geom_text(hjust=0.5, vjust=0.5, color="black") +
+  ggtitle("Plate Appearances by Inning") +
+  geom_rect(mapping = aes(ymax = 3.37750, ymin = 1.5, xmax = -.83083, xmin = .83083)
+            , alpha = 0, size=1.2, colour = "black") +
+  geom_rect(mapping = aes(ymax = 3.5, ymin = 1.37750, xmax = -.99750, xmin = .99750), 
+            alpha = 0, size=1.2, colour = "black") +
+  geom_rect(mapping = aes(ymax = 5, ymin = 0, xmax = -1.8, xmin = 1.8), 
+            alpha = 0, size=0.5, colour = "black") +
+  geom_rect(mapping = aes(ymax = 3, ymin = 2, xmax = -.41666667, xmin = .41666667), 
+            alpha=0, size=1.2, colour = "red")+
+  facet_wrap(~Inning) + ylab("") + xlab("") +
+  theme_bw()
+```
+
+ </div>
+ </div>
