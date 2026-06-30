@@ -8,7 +8,7 @@ Contains projects I have worked on during my time at Coastal Carolina University
 
 [Swing Decision App]
 - Was given to me in R markdown form "broken" by the GSU pitching staff
-- Created app based on R markdown file
+- Created app based on R markdown file (included)
 
 [CCU Hitters App]
 [CCU Pitchers App] 
