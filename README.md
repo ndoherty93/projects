@@ -6,7 +6,7 @@ Contains projects I have worked on during my time at Coastal Carolina University
 - skeleton code was taken from example in Medium article by Gabe Appelbaum
 - layout was based on Microsoft excel file given to my by GSU pitching staff (included)
 
-[Swing Decision App]
+[Swing Decision App](SwingDecisionApp)
 - Was given to me in R markdown form "broken" by the GSU pitching staff
 - Created app based on R markdown file (included)
 
